@@ -1,0 +1,62 @@
+`timescale 1 ps/ 1 ps
+module Apple_pick_tb();
+// constants                                           
+// general purpose registers
+reg eachvec;
+// test vector input registers
+reg clock;
+reg globalReset;
+reg left;
+reg right;
+reg switch;
+// wires                                               
+wire FAIL;
+wire LT24CS_n;
+wire [15:0]  LT24Data;
+wire LT24LCDOn;
+wire LT24RS;
+wire LT24Rd_n;
+wire LT24Reset_n;
+wire LT24Wr_n;
+wire SUCCESS;
+wire resetApp;
+
+// assign statements (if any)                          
+Apple_pick i1 (
+// port map - connection between master ports and signals/registers   
+	.FAIL(FAIL),
+	.LT24CS_n(LT24CS_n),
+	.LT24Data(LT24Data),
+	.LT24LCDOn(LT24LCDOn),
+	.LT24RS(LT24RS),
+	.LT24Rd_n(LT24Rd_n),
+	.LT24Reset_n(LT24Reset_n),
+	.LT24Wr_n(LT24Wr_n),
+	.SUCCESS(SUCCESS),
+	.clock(clock),
+	.globalReset(globalReset),
+	.left(left),
+	.resetApp(resetApp),
+	.right(right),
+	.switch(switch)
+);
+initial                                                
+begin                                                  
+// code that executes only once                        
+// insert code here --> begin                          
+                                                       
+// --> end                                             
+$display("Running testbench");                       
+end                                                    
+always                                                 
+// optional sensitivity list                           
+// @(event1 or event2 or .... eventn)                  
+begin                                                  
+// code executes for every event on sensitivity list   
+// insert code here --> begin                          
+                                                       
+@eachvec;                                              
+// --> end                                             
+end                                                    
+endmodule
+

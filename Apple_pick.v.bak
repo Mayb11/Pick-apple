@@ -1,0 +1,347 @@
+module Digital_Clock (
+    // Global Clock/Reset
+    // - Clock
+    input              clock,
+    // - Global Reset
+    input              globalReset,
+	 // people movement
+	 input right,
+	 input left,
+	 input switch,
+    // - Application Reset - for debug
+    output             resetApp,
+	 // state of success or not
+	 output 			reg	 SUCCESS,
+	 output			reg		  FAIL,
+    
+    // LT24 Interface
+    output             LT24Wr_n,
+    output             LT24Rd_n,
+    output             LT24CS_n,
+    output             LT24RS,
+    output             LT24Reset_n,
+    output [     15:0] LT24Data,
+    output             LT24LCDOn
+);
+
+//
+// Local Variables
+//
+reg  [ 7:0] xAddr;
+reg  [ 8:0] yAddr;
+reg  [15:0] pixelData;
+wire        pixelReady;
+reg         pixelWrite;
+
+reg [4:0] state;
+
+localparam s1=5'b00001;
+localparam s2=5'b00010;
+localparam s3=5'b00100;
+localparam s4=5'b01000;
+localparam s5=5'b10000;
+
+//
+// LCD Display
+//
+localparam LCD_WIDTH  = 240;
+localparam LCD_HEIGHT = 320;
+
+LT24Display #(
+    .WIDTH       (LCD_WIDTH  ),
+    .HEIGHT      (LCD_HEIGHT ),
+    .CLOCK_FREQ  (50000000   )
+) Display (
+    //Clock and Reset In
+    .clock       (clock      ),
+    .globalReset (globalReset),
+    //Reset for User Logic
+    .resetApp    (resetApp   ),
+    //Pixel Interface
+    .xAddr       (xAddr      ),
+    .yAddr       (yAddr      ),
+    .pixelData   (pixelData  ),
+    .pixelWrite  (pixelWrite ),
+    .pixelReady  (pixelReady ),
+    //Use pixel addressing mode
+    .pixelRawMode(1'b0       ),
+    //Unused Command Interface
+    .cmdData     (8'b0       ),
+    .cmdWrite    (1'b0       ),
+    .cmdDone     (1'b0       ),
+    .cmdReady    (           ),
+    //Display Connections
+    .LT24Wr_n    (LT24Wr_n   ),
+    .LT24Rd_n    (LT24Rd_n   ),
+    .LT24CS_n    (LT24CS_n   ),
+    .LT24RS      (LT24RS     ),
+    .LT24Reset_n (LT24Reset_n),
+    .LT24Data    (LT24Data   ),
+    .LT24LCDOn   (LT24LCDOn  )
+);
+
+//
+// X Counter
+//
+wire [7:0] people_xCount;
+UpCounterNbit #(
+    .WIDTH    (          8),
+    .MAX_VALUE(10)
+) people_xCounter (
+    .clock     (clock     ),
+    .reset     (resetApp  ),
+    .enable    (pixelReady),
+    .countValue(people_xCount    )
+);
+
+//
+// Y Counter
+//
+wire [8:0] people_yCount;
+wire people_yCntEnable = pixelReady && (people_xCount == (10));
+UpCounterNbit #(
+    .WIDTH    (           9),
+    .MAX_VALUE(10)
+) people_yCounter (
+    .clock     (clock     ),
+    .reset     (resetApp  ),
+    .enable    (people_yCntEnable),
+    .countValue(people_yCount    )
+);
+
+wire [7:0] screen_xCount;
+UpCounterNbit #(
+    .WIDTH    (          8),
+    .MAX_VALUE(239)
+) screen_xCounter (
+    .clock     (clock     ),
+    .reset     (resetApp  ),
+    .enable    (pixelReady),
+    .countValue(screen_xCount    )
+);
+
+//
+// Y Counter
+//
+wire [8:0] screen_yCount;
+wire screen_yCntEnable = pixelReady && (screen_xCount == (239));
+UpCounterNbit #(
+    .WIDTH    (           9),
+    .MAX_VALUE(319)
+) screen_yCounter (
+    .clock     (clock     ),
+    .reset     (resetApp  ),
+    .enable    (screen_yCntEnable),
+    .countValue(screen_yCount    )
+);
+
+//
+// 
+//
+
+
+
+
+reg [7:0] apple_xlocation=8'd119;
+reg [8:0] apple_ylocation=9'd9;
+reg [7:0]people_xlocation=8'd119;
+reg [8:0]people_ylocation=9'd309;
+reg [7:0]last_people_xlocation=8'd0;
+reg [8:0]last_people_ylocation=9'd0;
+reg [7:0]last_apple_xlocation=8'd0;
+reg [8:0]last_apple_ylocation=9'd0;
+reg right_last;	
+reg left_last;
+reg switch_last;
+reg [7:0]T=8'd0;
+reg [27:0] F=28'b0;
+reg success=0;
+reg fail=0;
+
+integer i,j;
+always @ (posedge clock or posedge resetApp) begin
+    if (resetApp) begin
+		pixelWrite			 <=1'b1;
+		xAddr               <= screen_xCount;
+		yAddr               <= screen_yCount;
+		pixelData[15:11]    <= 5'b00000;
+		pixelData[10: 5]    <= 6'b000000;
+		pixelData[4:0]		  <= 5'b11111;
+		apple_xlocation<=8'd119;//0~229
+		apple_ylocation<=9'd9;//9~309
+		people_xlocation<=8'd119;// 0~229
+		people_ylocation<=9'd309;
+		last_people_xlocation<=8'd119;
+		last_people_ylocation<=9'd309;
+		last_apple_xlocation<=8'd119;
+		last_apple_ylocation<=9'd9;
+		success<=0;
+		fail<=0;
+		//F<=28'd0;
+		//T<=8'd0;
+    end 
+	 else begin
+		right_last<=right;
+		left_last<=left;
+		switch_last<=switch;
+		
+		if (F < 28'd239_999)	begin// count 1 second
+				F			<= F + 1'b1;
+		end	// due to the clock was 50MHz, so it would count24999999 times, then we have 1 second
+		else begin 
+				F 			<= 28'd0; // when counter reach the peak, set counter to 0, and repeat the whole steps again
+				if (T < 8'd230) begin 
+					T <= T+8'd10;
+				end
+				else begin 
+					T <= 8'd0;
+				end
+		end 
+		case (state)
+			s1: begin 
+				pixelWrite<=1'b1;
+				SUCCESS<=1'b0;
+				FAIL<=1'b0;
+				if (screen_xCount >= people_xlocation && screen_xCount <= people_xlocation+8'd10 && screen_yCount >= people_ylocation && screen_yCount <= people_ylocation+8'd10) begin
+					xAddr               <= screen_xCount;
+					yAddr               <= screen_yCount;
+					pixelData[15:11]    <= 5'b00000;
+					pixelData[10: 5]    <= 6'b111111;
+					pixelData[4:0]		  <= 5'b00000;
+					last_people_xlocation<=people_xlocation;
+					last_people_ylocation<=people_ylocation;	
+				end
+				else if (screen_xCount >= apple_xlocation && screen_xCount <= apple_xlocation+9'd10 && screen_yCount >= apple_ylocation && screen_yCount <= apple_ylocation+9'd10) begin
+					xAddr               <= screen_xCount;
+					yAddr               <= screen_yCount;
+					pixelData[15:11]    <= 5'b11111;
+					pixelData[10: 5]    <= 6'b000000;
+					pixelData[4:0]		  <= 5'b00000;
+					last_apple_xlocation<=apple_xlocation;
+					last_apple_ylocation<=apple_ylocation;
+					
+				end
+				else if (right_last &&~right) begin 
+					state <= s2;
+				end
+				else if (left_last &&~left) begin 
+					state <= s3;
+				end
+				else if (F == 28'd19_199) begin 
+					state<=s4;
+				end
+			end
+			
+			s2: begin 
+				pixelWrite<=1'b1;
+				people_xlocation<=last_people_xlocation+8'd10;
+				//people_xlocation<=people_xlocation+8'd10;
+				xAddr               <= screen_xCount;
+				yAddr               <= screen_yCount;
+				pixelData[15:11]    <= 5'b00000;
+				pixelData[10: 5]    <= 6'b000000;
+				pixelData[4:0]		  <= 5'b00000;
+				if (F == 28'd19_199) begin 
+					state<=s1;
+				end
+			end
+			
+			s3: begin 
+				pixelWrite<=1'b1;
+				people_xlocation<=last_people_xlocation-8'd10;
+				//people_xlocation<=people_xlocation-8'd10;
+				xAddr               <= screen_xCount;
+				yAddr               <= screen_yCount;
+				pixelData[15:11]    <= 5'b00000;
+				pixelData[10: 5]    <= 6'b000000;
+				pixelData[4:0]		  <= 5'b00000;
+				if (F == 28'd19_199) begin 
+					state<=s1;
+				end
+			end 
+			
+			s4: begin 
+				pixelWrite<=1'b1;
+				if (apple_ylocation<309) begin 
+					apple_ylocation<=last_apple_ylocation+9'd5;
+					apple_xlocation<=last_apple_xlocation;
+					//apple_ylocation<=apple_ylocation+9'd5;
+					//apple_xlocation<=apple_xlocation;
+				end 
+				else if (last_apple_ylocation == 9'd304) begin
+					if (apple_xlocation == people_xlocation) begin 
+						SUCCESS<=1'b1;
+						apple_xlocation<=T-8'd1;
+						apple_ylocation<=9'd9;
+					end
+					else begin 
+						FAIL<=1'b1;
+						apple_xlocation<=T-8'd1;
+						apple_ylocation<=9'd9;
+					end
+				end
+				
+				xAddr               <= screen_xCount;
+				yAddr               <= screen_yCount;
+				
+				pixelData[15:11]    <= 5'b00000;
+				pixelData[10: 5]    <= 6'b000000;
+				pixelData[4:0]		  <= 5'b00000;
+				if (F == 28'd19_199) begin 
+					state<=s1;
+				end
+			end
+			
+			
+			default state<=s1;
+		endcase
+	end
+   
+end
+// people movement
+
+
+endmodule
+
+/*
+ * N-Bit Up Counter
+ * ----------------
+ * By: Thomas Carpenter
+ * Date: 13/03/2017 
+ *
+ * Short Description
+ * -----------------
+ * This module is a simple up-counter with a count enable.
+ * The counter has parameter controlled width, increment,
+ * and maximum value.
+ *
+ */
+
+module UpCounterNbit #(
+    parameter WIDTH = 10,               //10bit wide
+    parameter INCREMENT = 1,            //Value to increment counter by each cycle
+    parameter MAX_VALUE = (2**WIDTH)-1  //Maximum value default is 2^WIDTH - 1
+)(   
+    input                    clock,
+    input                    reset,
+    input                    enable,    //Increments when enable is high
+    output reg [(WIDTH-1):0] countValue //Output is declared as "WIDTH" bits wide
+);
+
+always @ (posedge clock) begin
+    if (reset) begin
+        //When reset is high, set back to 0
+        countValue <= {(WIDTH){1'b0}};
+    end else if (enable) begin
+        //Otherwise counter is not in reset
+        if (countValue >= MAX_VALUE[WIDTH-1:0]) begin
+            //If the counter value is equal or exceeds the maximum value
+            countValue <= {(WIDTH){1'b0}};   //Reset back to 0
+        end else begin
+            //Otherwise increment
+            countValue <= countValue + INCREMENT[WIDTH-1:0];
+        end
+    end
+end
+
+endmodule

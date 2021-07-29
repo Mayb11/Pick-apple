@@ -1,0 +1,2 @@
+Info (10281): Verilog HDL Declaration information at Apple_pick.v(8): object "right" differs only in case from object "RIGHT" in the same scope File: C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/Apple_pick.v Line: 8
+Info (10281): Verilog HDL Declaration information at Apple_pick.v(9): object "left" differs only in case from object "LEFT" in the same scope File: C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/Apple_pick.v Line: 9

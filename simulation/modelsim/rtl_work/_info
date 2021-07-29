@@ -1,0 +1,171 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/simulation/modelsim
+vApple_pick
+Z1 !s110 1620911815
+!i10b 1
+!s100 L]A9XSlEn@i<okFoE5b5B1
+IcB3:Bmi3GfEV<<Z_fchod3
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+Z3 w1620831225
+Z4 8C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/Apple_pick.v
+Z5 FC:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/Apple_pick.v
+L0 1
+Z6 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z7 !s108 1620911815.000000
+Z8 !s107 C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/Apple_pick.v|
+Z9 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1|C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/Apple_pick.v|
+!i113 1
+Z10 o-vlog01compat -work work
+Z11 !s92 -vlog01compat -work work +incdir+C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1
+Z12 tCvgOpt 0
+n@apple_pick
+vApple_pick_tb
+Z13 !s110 1620911816
+!i10b 1
+!s100 5e]fWPbfT2_hg:B2Robi70
+IRMH=zo?m4c`S_HQ7Q5kSo1
+R2
+R0
+w1619183082
+8C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/Apple_pick_tb.v
+FC:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/Apple_pick_tb.v
+L0 2
+R6
+r1
+!s85 0
+31
+!s108 1620911816.000000
+!s107 C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/Apple_pick_tb.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1|C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/Apple_pick_tb.v|
+!i113 1
+R10
+R11
+R12
+n@apple_pick_tb
+vLT24Display
+R13
+!i10b 1
+!s100 g0Ml0H`ILV7gf4e]j455d3
+I6iRWn_OICDP7[Pfd[zU:62
+R2
+R0
+Z14 w1618064158
+Z15 8C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/LT24Display.v
+Z16 FC:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/LT24Display.v
+L0 86
+R6
+r1
+!s85 0
+31
+R7
+Z17 !s107 C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/LT24Display.v|
+Z18 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1|C:/Users/haozhe/Desktop/MSC/ELEC5566M/Github/ELEC5566M-MiniProject-haozhe1/LT24Display.v|
+!i113 1
+R10
+R11
+R12
+n@l@t24@display
+vLT24DisplayInterface
+R13
+!i10b 1
+!s100 S52Fa_]jASRIg5HK3cSR53
+IN8T`?^10O_B1VXX>3clEB2
+R2
+R0
+R14
+R15
+R16
+L0 409
+R6
+r1
+!s85 0
+31
+R7
+R17
+R18
+!i113 1
+R10
+R11
+R12
+n@l@t24@display@interface
+vLT24InitialData
+R13
+!i10b 1
+!s100 [PghI>V`k5H`AnPf[RPc_1
+I8;4Kc0R^@0?46jKXnM>BP0
+R2
+R0
+R14
+R15
+R16
+L0 523
+R6
+r1
+!s85 0
+31
+R7
+R17
+R18
+!i113 1
+R10
+R11
+R12
+n@l@t24@initial@data
+vResetSynchroniser
+R13
+!i10b 1
+!s100 g4:GWhz>Y3NIW7bPP@X5E0
+IXSlaBDHM5;G3^_D?B16>D2
+R2
+R0
+R14
+R15
+R16
+L0 493
+R6
+r1
+!s85 0
+31
+R7
+R17
+R18
+!i113 1
+R10
+R11
+R12
+n@reset@synchroniser
+vUpCounterNbit
+R1
+!i10b 1
+!s100 h4MgT=1eGmhb2N>E3BQ<Y2
+IiC8KzX5jYiYVz]m;i;FZU1
+R2
+R0
+R3
+R4
+R5
+L0 287
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 1
+R10
+R11
+R12
+n@up@counter@nbit

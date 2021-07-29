@@ -1,0 +1,133 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1100mV 85C Model Setup 'clock'
+Slack : -6.440
+TNS   : -898.006
+
+Type  : Slow 1100mV 85C Model Setup 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : -2.961
+TNS   : -47.797
+
+Type  : Slow 1100mV 85C Model Hold 'clock'
+Slack : 0.331
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Hold 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : 1.740
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Recovery 'clock'
+Slack : -6.529
+TNS   : -720.995
+
+Type  : Slow 1100mV 85C Model Removal 'clock'
+Slack : 0.961
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'clock'
+Slack : -0.394
+TNS   : -123.493
+
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : 0.356
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Setup 'clock'
+Slack : -6.318
+TNS   : -863.498
+
+Type  : Slow 1100mV 0C Model Setup 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : -3.077
+TNS   : -49.030
+
+Type  : Slow 1100mV 0C Model Hold 'clock'
+Slack : 0.322
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Hold 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : 1.800
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Recovery 'clock'
+Slack : -6.199
+TNS   : -670.759
+
+Type  : Slow 1100mV 0C Model Removal 'clock'
+Slack : 0.599
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'clock'
+Slack : -0.394
+TNS   : -132.211
+
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : 0.297
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Setup 'clock'
+Slack : -4.189
+TNS   : -479.317
+
+Type  : Fast 1100mV 85C Model Setup 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : -1.116
+TNS   : -18.052
+
+Type  : Fast 1100mV 85C Model Hold 'clock'
+Slack : 0.181
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Hold 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : 0.953
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Recovery 'clock'
+Slack : -4.211
+TNS   : -497.640
+
+Type  : Fast 1100mV 85C Model Removal 'clock'
+Slack : 0.917
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'clock'
+Slack : -0.093
+TNS   : -20.239
+
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : 0.383
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Setup 'clock'
+Slack : -3.541
+TNS   : -399.563
+
+Type  : Fast 1100mV 0C Model Setup 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : -1.109
+TNS   : -17.711
+
+Type  : Fast 1100mV 0C Model Hold 'clock'
+Slack : 0.168
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Hold 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : 0.978
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Recovery 'clock'
+Slack : -3.567
+TNS   : -408.325
+
+Type  : Fast 1100mV 0C Model Removal 'clock'
+Slack : 0.611
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'clock'
+Slack : -0.090
+TNS   : -19.998
+
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'LT24Display:Display|ResetSynchroniser:resetGen|resetSync[3]'
+Slack : 0.384
+TNS   : 0.000
+
+------------------------------------------------------------
